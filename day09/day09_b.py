@@ -1,11 +1,11 @@
 from collections import namedtuple
 Cord = namedtuple("Cord", ["x", "y"], defaults=[0, 0])
 
-if __name__ == "__main__":
+def run(length):
     data = [line.split() for line in open("input.txt")]
     data = [(d, int(l)) for d, l in data]
     dir = {"R": Cord(0, 1), "L": Cord(0, -1), "U": Cord(-1, 0), "D": Cord(1, 0)}
-    tail = [Cord() for _ in range(10)]
+    tail = [Cord() for _ in range(length)]
     visited_t = set()
     for direction, length in data:
         direction = dir[direction]
@@ -20,4 +20,7 @@ if __name__ == "__main__":
                     else:
                         tail[i] = Cord(curr.x + [-1, 1][prev.x > curr.x], curr.y + [-1, 1][prev.y > curr.y])
             visited_t.add(curr)
-    print(len(visited_t))
+    return len(visited_t)
+
+if __name__ == "__main__":
+    print(run(2), run(10))
